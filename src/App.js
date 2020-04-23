@@ -1,7 +1,7 @@
 import React from 'react';
-import UserBar from './user/UserBar';
+import CreatePost from './post/CreatePost';
 import './App.css';
 
 export default function App() {
-  return <UserBar />
+  return <CreatePost />
 }
