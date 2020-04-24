@@ -1,8 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
-export default function Login() {
+export default function Login({ setUser }) {
+  const [ username, setUsername ] = useState('')
+
+  function handleUsername (event) {
+    setUsername(event.target.value)
+  }
+
   return (
     <Form
       name="normal_login"
@@ -10,7 +16,7 @@ export default function Login() {
       initialValues={{
         remember: true,
       }}
-      onSubmit={e => e.preventDefault()}
+      onFinish={e => setUser(username) }
     >
       <Form.Item
         name="username"
@@ -21,7 +27,7 @@ export default function Login() {
           },
         ]}
       >
-        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" value={username} onChange={handleUsername} />
       </Form.Item>
       <Form.Item
         name="password"
@@ -49,7 +55,7 @@ export default function Login() {
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" htmlType="submit" className="login-form-button">
+        <Button type="primary" htmlType="submit" className="login-form-button" disabled={username.length === 0}>
           Log in
         </Button>
         Or <a href="">register now!</a>
