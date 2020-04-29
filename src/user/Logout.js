@@ -1,7 +1,7 @@
 import React from 'react'
 import { Form, Button } from 'antd';
 
-export default function Logout ({user, setUser}) {
+export default function Logout ({user, dispatch}) {
   return (
     <Form
       name="normal_login"
@@ -10,7 +10,7 @@ export default function Logout ({user, setUser}) {
         remember: true,
       }}
       onSubmit={e => e.preventDefault()}
-      onFinish={e => setUser('')}
+      onFinish={e => dispatch({type: 'LOGOUT'})}
     >
       Logged in as: <b>{user}</b>
       <Form.Item>

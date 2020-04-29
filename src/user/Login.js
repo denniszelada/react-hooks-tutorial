@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
-export default function Login({ setUser }) {
+export default function Login({ dispatch }) {
   const [ username, setUsername ] = useState('')
 
   function handleUsername (event) {
@@ -16,7 +16,7 @@ export default function Login({ setUser }) {
       initialValues={{
         remember: true,
       }}
-      onFinish={e => setUser(username) }
+      onFinish={e => dispatch({ type: 'LOGIN', username }) }
     >
       <Form.Item
         name="username"
@@ -50,8 +50,7 @@ export default function Login({ setUser }) {
         </Form.Item>
 
         <a className="login-form-forgot" href="">
-          Forgot password
-        </a>
+          Forgot password </a>
       </Form.Item>
 
       <Form.Item>
