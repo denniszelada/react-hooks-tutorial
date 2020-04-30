@@ -3,6 +3,8 @@ import PostList from './post/PostList';
 import CreatePost from './post/CreatePost';
 import UserBar from './user/UserBar';
 import appReducer from './reducers'
+import Header from './Header'
+import { ThemeContext } from './contexts'
 import './App.css';
 
 const defaultPosts = [
@@ -24,13 +26,16 @@ export default function App() {
   }, [user])
 
   return (
-    <div style={{ padding: 8 }}>
-      <UserBar user={user} dispatch={dispatch} />
-      <br />
-    {user && <CreatePost user={user} posts={posts} dispatch={dispatch} />}
-      <br />
-      <hr />
-      <PostList posts={posts} />
-    </div>
+    <ThemeContext.Provider value={{ primaryColor: 'deepskyblue', secondaryColor: 'coral' }}>
+      <div style={{ padding: 8 }}>
+        <Header text="React Hooks Blog" />
+        <UserBar user={user} dispatch={dispatch} />
+        <br />
+      {user && <CreatePost user={user} posts={posts} dispatch={dispatch} />}
+        <br />
+        <hr />
+        <PostList posts={posts} />
+      </div>
+    </ThemeContext.Provider>
   )
 }
