@@ -1,7 +1,11 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import { Form, Button } from 'antd';
+import { StateContext } from '../contexts'
 
-export default function Logout ({user, dispatch}) {
+export default function Logout () {
+  const {state, dispatch} = useContext(StateContext)
+  const { user } = state
+
   return (
     <Form
       name="normal_login"

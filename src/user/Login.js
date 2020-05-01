@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { StateContext } from '../contexts'
 
-export default function Login({ dispatch }) {
+export default function Login() {
   const [ username, setUsername ] = useState('')
+  const { dispatch } = useContext(StateContext)
 
   function handleUsername (event) {
     setUsername(event.target.value)
