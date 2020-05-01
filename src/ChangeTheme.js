@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useResource } from 'react-request-hook'
 
 function ThemeItem ({ theme, active, onClick }) {
   return (
@@ -10,13 +11,14 @@ function ThemeItem ({ theme, active, onClick }) {
 }
 
 export default function ChangeTheme ({ theme, setTheme }) {
-  const [ themes, setThemes ] = useState([])
+  const [ themes, getThemes ] = useResource(() => ({
+    url: '/themes',
+    method: 'get'
+  }))
 
-  useEffect(() => {
-    fetch('/api/themes')
-    .then(result => result.json())
-    .then(themes => setThemes(themes))
-  }, [])
+  const { data, isLoading } = themes
+
+  useEffect(getThemes, [])
 
   function isActive(t) {
     return t.primaryColor === theme.primaryColor && t.secondaryColor === theme.secondaryColor
@@ -24,8 +26,9 @@ export default function ChangeTheme ({ theme, setTheme }) {
 
   return (
     <div>
+      {isLoading && 'Loading theme...'}
       Change theme:
-      {themes.map((t, i) =>
+      {data && data.map((t, i) =>
         <ThemeItem key={'theme-' + i} theme={t} active={isActive(t)} onClick={() => setTheme(t)} />
       )}
     </div>
