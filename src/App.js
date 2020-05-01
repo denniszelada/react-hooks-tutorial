@@ -8,19 +8,19 @@ import { ThemeContext, StateContext } from './contexts'
 import ChangeTheme from './ChangeTheme'
 import './App.css';
 
-const defaultPosts = [
-  { title: 'React Hooks', content: 'The greatest thing since sliced bread', author: 'Daniel B.'},
-  { title: 'Using React Fragments', content: 'Keeping the DOM tree clean!', author: 'Daniel B.'},
-]
-
-
 export default function App() {
   const [theme, setTheme] = useState({
     primaryColor: 'deepskyblue',
     secondaryColor: 'coral'
   })
-  const [ state, dispatch ] = useReducer(appReducer, { user: '', posts: defaultPosts })
+  const [ state, dispatch ] = useReducer(appReducer, { user: '', posts: [] })
   const { user, posts } = state
+
+  useEffect(()=> {
+    fetch('/api/posts')
+    .then(result => result.json())
+    .then(posts => dispatch({ type: 'FETCH_POSTS', posts}))
+  }, [])
 
   useEffect(() => {
     if (user) {

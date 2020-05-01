@@ -13,6 +13,8 @@ export default function appReducer (state, action) {
 
   function postsReducer (state, action) {
     switch (action.type) {
+      case 'FETCH_POSTS':
+        return action.posts
       case 'CREATE_POST':
         const newPost = { title: action.title, content: action.content, author: action.author }
         return [ newPost, ...state ]
