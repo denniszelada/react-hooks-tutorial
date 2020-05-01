@@ -14,7 +14,7 @@
     "react-scripts": "3.4.1"
   },
   "scripts": {
-    "start:server": "npx json-server --watch server/db.json --port 4000",
+    "start:server": "npx json-server --watch server/db.json --port 4000 --routes server/routes.json",
     "start:client": "react-scripts start",
     "start": "npx concurrently \"npm run start:server\" \"npm run start:client\"",
     "build": "react-scripts build",
