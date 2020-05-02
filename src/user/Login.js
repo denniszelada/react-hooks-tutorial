@@ -1,16 +1,42 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { StateContext } from '../contexts'
+import { useResource } from 'react-request-hook'
 
 export default function Login() {
+  const [ loginFailed, setLoginFailed ] = useState(false)
+  const [ password, setPassword ] = useState('')
   const [ username, setUsername ] = useState('')
   const { dispatch } = useContext(StateContext)
+  const [ user, login ] = useResource((username, password) => ({
+    url: `/login/${encodeURI(username)}/${encodeURI(password)}`,
+    method: 'get'
+  }))
+
+  useEffect(() => {
+    if (user && user.data) {
+      if (user.data.length > 0) {
+        setLoginFailed(false)
+        dispatch({ type: 'LOGIN', username: user.data[0].username})
+      } else {
+        setLoginFailed(true)
+      }
+    }
+
+    if (user && user.error) {
+      setLoginFailed(true)
+    }
+  }, [user])
 
   function handleUsername (event) {
     setUsername(event.target.value)
   }
 
+  function handlePassword (event) {
+    setPassword(event.target.value)
+  }
+ 
   return (
     <Form
       name="normal_login"
@@ -18,7 +44,7 @@ export default function Login() {
       initialValues={{
         remember: true,
       }}
-      onFinish={e => dispatch({ type: 'LOGIN', username }) }
+      onFinish={e => { login(username, password) } }
     >
       <Form.Item
         name="username"
@@ -43,6 +69,8 @@ export default function Login() {
         <Input
           prefix={<LockOutlined className="site-form-item-icon" />}
           type="password"
+          value={password}
+          onChange={handlePassword}
           placeholder="Password"
         />
       </Form.Item>
@@ -61,6 +89,7 @@ export default function Login() {
         </Button>
         Or <a href="">register now!</a>
       </Form.Item>
+      {loginFailed && <span style={{ color: 'red' }}>Invalid username or password</span>}
     </Form>
   )
 }
