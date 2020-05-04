@@ -1,8 +1,11 @@
 import React, { useReducer, useEffect, useState } from 'react';
 import appReducer from './reducers'
 import { ThemeContext, StateContext } from './contexts'
+import { Router, View } from 'react-navi'
+import { mount, route } from 'navi'
 import HeaderBar from './pages/HeaderBar'
 import HomePage from './pages/HomePage'
+import PostPage from './pages/PostPage'
 import './App.css';
 
 export default function App() {
@@ -12,7 +15,12 @@ export default function App() {
   })
   const [ state, dispatch ] = useReducer(appReducer, { user: '', posts: [], error: '' })
   const { user } = state
-
+  const routes = mount({
+    '/': route({ view: <HomePage />}),
+    '/view/:id': route(req => {
+      return { view: <PostPage id={req.params.id} /> }
+    }),
+  })
 
   useEffect(() => {
     if (user) {
@@ -25,12 +33,13 @@ export default function App() {
   return (
     <StateContext.Provider value={{ state, dispatch }}>
       <ThemeContext.Provider value={theme}>
-        <div style={{ padding: 8 }}>
-          <HeaderBar setTheme={setTheme}/>
-          <br />
-          <hr />
-          <HomePage />
-        </div>
+        <Router routes={routes}>
+          <div style={{ padding: 8 }}>
+            <HeaderBar setTheme={setTheme}/>
+            <hr />
+            <View />
+          </div>
+        </Router>
       </ThemeContext.Provider>
     </StateContext.Provider>
   )
