@@ -27,7 +27,7 @@ export default function appReducer (state, action) {
      switch (action.type) {
       case 'POSTS_ERROR':
         return 'Failed to fetch posts'
-       default: 
+       default:
          return state
      }
   }
