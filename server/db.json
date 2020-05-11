@@ -17,6 +17,12 @@
       "title": "Hello",
       "content": "I want to test if this is working as expected or not.",
       "author": "dennis"
+    },
+    {
+      "id": "f2NSKsq",
+      "title": "Testing reload",
+      "content": "this is to test the reload",
+      "author": "dennis"
     }
   ],
   "users": [
