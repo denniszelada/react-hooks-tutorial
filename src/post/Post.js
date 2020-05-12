@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { ThemeContext } from '../contexts'
 import { Link } from 'react-navi'
+import FooterBar from '../pages/FooterBar'
 
 function Post ({ id, title, content, author, short = false }) {
     let processedContent = content
@@ -23,6 +24,7 @@ function Post ({ id, title, content, author, short = false }) {
       }
       <br />
       <i>Written by <b>{author}</b></i>
+      <FooterBar />
     </div>
   )
 }
